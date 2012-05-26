@@ -1,0 +1,64 @@
+name: GameTools
+version: ${project.version}.${build.number}
+description: Tools for setting up games. Live setting of world state - no restarts to change PvP. Timers for running commands. Generic game commands. Teamkilling prevention.(Not yet implemented!)
+authors: [nallar]
+website: http://www.nallar.me/minecraft/gameTools
+
+main: me.nallar.gameTools.GameTools
+
+database: false
+depend: [Spout]
+
+commands:
+  worldset:
+    description: Set world configuration without restarting
+    aliases: [wset]
+    permission: gametools.worldset
+    usage: |
+      See http://nallar.me/minecraft/GameTools
+  game:
+    description:
+  setLoadSpawn:
+    description: Set whether spawn should be kept loaded even if no players in it.
+    permission: gametools.setloadspawn
+    usage: |
+      /<command> [state]
+      Example: /<command> - toggle spawn loading
+      Example: /<command> 1 - set spawn loading on
+  setDifficulty:
+    description: Set world difficulty
+    aliases: [setWorldDifficulty]
+    permission: gametools.setdifficulty
+    usage: |
+      /<command> level
+      Example: /<command> 0 - set difficulty to 0 (peaceful)
+  setSpawning:
+    description: Set spawning of animals and mobs
+    permission: gametools.setspawning
+    usage: |
+      /<command> mobSpawns animalSpawns
+      Example: /<command> 0 1 - set monster spawning off, animal spawning on
+  setpvp:
+    description: Set whether PvP should be enabled
+    permission: gametools.setpvp
+
+permissions:
+  GameTools.*:
+    description: Gives access to all Inferno commands
+    children:
+      GameTools.setPvP: true
+      GameTools.setDifficulty: true
+      GameTools.setLoadSpawn: true
+      GameTools.setSpawning: true
+  GameTools.setPvP:
+    description: Allows you to set PvP
+    default: op
+  GameTools.setDifficulty:
+    description: Allows you to set difficulty
+    default: op
+  GameTools.setLoadSpawn:
+    description: Allows you to set spawn loading
+    default: op
+  GameTools.setSpawning:
+    description: Allows you to set mob/animal spawning
+    default: op

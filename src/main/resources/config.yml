@@ -1,0 +1,7 @@
+fixSkins: true
+debug: false
+recommendPlusPlus: true
+devLogin: true
+
+GameModes:
+    -

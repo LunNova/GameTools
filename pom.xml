@@ -1,0 +1,217 @@
+﻿<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Project information -->
+	<name>GameTools</name>
+	<groupId>me.nallar</groupId>
+	<artifactId>gametools</artifactId>
+	<version>dev-SNAPSHOT</version>
+	<url>http://nallar.me/minecraft/gameTools</url>
+	<inceptionYear>2012</inceptionYear>
+	<description>Configuration with commands of basic world state - no restarting to change PvP!</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<craftbukkit.version>1.2.5-R3.1-SNAPSHOT</craftbukkit.version>
+		<build.number>0</build.number>
+		<currentYear>2012</currentYear>
+		<license>N Open License, Version 1</license>
+		<licenseUrl>http://www.nallar.me/licenses/n-open-license-v1.txt</licenseUrl>
+	</properties>
+
+	<organization>
+		<name>nallar</name>
+		<url>http://nallar.me/</url>
+	</organization>
+	
+	<licenses>
+		<license>
+			<name>${license}</name>
+			<url>${licenseUrl}</url>
+			<distribution>repo</distribution>
+			<comments>GNU Lesser General Public License Version 3, but with a provision that files are released under the FreeBSD license 90 days after they are published</comments>
+		</license>
+	</licenses>
+
+	<scm>
+		<developerConnection>scm:git:git@github.com:nallar/${project.name}.git</developerConnection>
+		<connection>scm:git:git://github.com/nallar/${project.name}.git</connection>
+		<url>https://github.com/nallar/${project.name}</url>
+	</scm>
+
+	<ciManagement>
+		<system>jenkins</system>
+		<url>http://nallar.me/buildservice</url>
+	</ciManagement>
+
+	
+	<repositories>
+		<repository>
+			<id>central</id>
+			<url>http://repo1.maven.org/maven2/</url>
+		</repository>
+		<repository>
+			<id>repobo-snap</id>
+			<url>http://repo.bukkit.org/content/groups/public</url>
+		</repository>
+		<repository>
+			<id>spout-repo</id>
+			<url>http://repo.spout.org</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spout-plugins</id>
+			<url>http://repo.spout.org</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>bukkit-plugins</id>
+			<url>http://repo.bukkit.org/content/groups/public</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.bukkit</groupId>
+			<artifactId>craftbukkit</artifactId>
+			<version>${craftbukkit.version}</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.getspout</groupId>
+			<artifactId>spoutplugin</artifactId>
+			<version>dev-SNAPSHOT</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<defaultGoal>clean package install javadoc:javadoc</defaultGoal>
+		
+		<resources>
+			<resource>
+				<targetPath>.</targetPath>
+				<filtering>false</filtering>
+				<directory>${basedir}</directory>
+				<includes>
+					<include>LICENSE</include>
+				</includes>
+			</resource>
+			<resource>
+				<targetPath>.</targetPath>
+				<filtering>true</filtering>
+				<directory>${basedir}/src/main/resources</directory>
+				<includes>
+					<include>*.yml</include>
+				</includes>
+			</resource>
+			<resource>
+				<targetPath>.</targetPath>
+				<filtering>false</filtering>
+				<directory>${basedir}/src/main/resources</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<version>1.10.b1</version>
+				<executions>
+					<execution>
+						<configuration>
+							<properties>
+								<name>${project.name}</name>
+								<url>${project.url}</url>
+								<copyright>Copyright © ${project.inceptionYear}-${currentYear}, ${project.organization.name}</copyright>
+								<license>${license}</license>
+								<licenseUrl>${licenseUrl}</licenseUrl>
+							</properties>
+							<quiet>true</quiet>
+							<encoding>UTF-8</encoding>
+							<strictCheck>true</strictCheck>
+							<header>${basedir}/HEADER</header>
+							<mapping>
+								<java>SLASHSTAR_STYLE</java>
+							</mapping>
+							<keywords>
+								<keyword>${project.name}</keyword>
+								<keyword>license</keyword>
+							</keywords>
+							<includes>
+								<include>src/main/java/**</include>
+								<include>src/test/java/**</include>
+							</includes>
+						</configuration>
+						<phase>clean</phase>
+						<goals>
+							<goal>format</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.sourcesense.maven</groupId>
+				<artifactId>maven-nosnapshot-plugin</artifactId>
+				<version>0.0.7-SNAPSHOT</version>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>strip</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<version>${project.version}</version>
+					<propertyName>releaseVersion</propertyName>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>${minimumJreVersion}</source>
+					<target>${minimumJreVersion}</target>
+					<compilerArgument>-Xlint:all</compilerArgument>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.12</version>
+				<configuration>
+					<redirectTestOutputToFile>true</redirectTestOutputToFile>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
