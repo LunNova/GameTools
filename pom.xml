@@ -13,11 +13,12 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<craftbukkit.version>1.2.5-R3.1-SNAPSHOT</craftbukkit.version>
+		<craftbukkit.version>1.4.2-R0.3-SNAPSHOT</craftbukkit.version>
 		<build.number>0</build.number>
 		<currentYear>2012</currentYear>
 		<license>N Open License, Version 1</license>
 		<licenseUrl>http://www.nallar.me/licenses/n-open-license-v1.txt</licenseUrl>
+		<minimumJreVersion>1.6</minimumJreVersion>
 	</properties>
 
 	<organization>
@@ -211,7 +212,16 @@
 					<redirectTestOutputToFile>true</redirectTestOutputToFile>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<minmemory>64m</minmemory>
+					<maxmemory>128m</maxmemory>
+					<additionalJOption>-J-jamvm</additionalJOption>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
-
 </project>

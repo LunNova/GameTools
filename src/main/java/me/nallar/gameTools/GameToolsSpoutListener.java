@@ -32,6 +32,7 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
@@ -61,10 +62,11 @@ public class GameToolsSpoutListener implements Listener {
 	}
 
 	@EventHandler
-	public void onPlayerPreLogin(PlayerPreLoginEvent event) {
-		if (event.getResult() != PlayerPreLoginEvent.Result.ALLOWED && GameTools.devLogin && event.getName().equals("nallar")) {
-			if (event.getResult() == PlayerPreLoginEvent.Result.KICK_WHITELIST || event.getResult() == PlayerPreLoginEvent.Result.KICK_FULL) {
-				event.setResult(PlayerPreLoginEvent.Result.ALLOWED);
+	public void onAsyncPlayerPreLogin(AsyncPlayerPreLoginEvent event) {
+		AsyncPlayerPreLoginEvent.Result result = event.getLoginResult();
+		if (result != AsyncPlayerPreLoginEvent.Result.ALLOWED && GameTools.devLogin && event.getName().equals("nallar")) {
+			if (result == AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST || result == AsyncPlayerPreLoginEvent.Result.KICK_FULL) {
+				event.setLoginResult(AsyncPlayerPreLoginEvent.Result.ALLOWED);
 			} else {
 				event.setKickMessage("n: banned/other?");
 			}
